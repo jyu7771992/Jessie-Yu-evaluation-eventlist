@@ -14,6 +14,8 @@ body {
   margin: 0 auto;
   min-width: 500px;
   min-height: 500px;
+  text-align: center;
+  padding: 2rem 3rem;
 }
 
 .open {
@@ -21,4 +23,49 @@ body {
 }
 .close {
   display: none;
+}
+
+.add-event {
+  background-color: #008cba;
+  color: white;
+  border-radius: 5px;
+  border: 1px solid #008cba;
+  padding: 0.5rem;
+  font-size: medium;
+  display: inline-block;
+  text-align: center;
+}
+
+.table-container {
+  width: 800px;
+  height: auto;
+  margin: 10px auto 0 auto;
+  border: 2px solid #e6e2d3;
+  border-radius: 10px;
+  border-spacing: 0rem;
+}
+
+thead tr th {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.tableBody .row,
+.tableBody .row td {
+  background-color: #e6e2d3;
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+.tableBody .row td {
+  text-align: center;
+}
+th,
+td {
+  padding: 15px;
+}
+
+.tableBody .row {
+  margin-bottom: 0.5rem;
 }
