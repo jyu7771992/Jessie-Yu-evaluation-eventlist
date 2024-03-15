@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+        <!-- create new form in the list -->
+      <button class="add-event" id="add-event-btn">Add New Event</button> 
+      
+      <table class="table-container" id="table-container">
+        <!-- heading of a table -->
+        <thead>
+          <!-- single row for this table -->
+          <tr>
+            <!-- tr is a heading of a table: attributes named scope: row/col -->
+            <th scope="col">Event</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <!-- the body of a table -->
+        <tbody id="tableBody">
+            <!-- dynamic content -->
+          <!-- <tr>
+            <th scope="row">event name</th>
+            
+            <td class>
+              <input type="date" id="start-time" name="meeting-time" />
+            </td>
+            <td>
+              <input type="date" id="end-time" name="meeting-time" />
+            </td>
+            <td>
+              <button type="submit" id="submit" class="submit">Edit</button>
+              <button id="btn-delete" class="delete">Delete</button>
+            </form>
+            </td>
+          </tr> -->
+          
+        </tbody>
+      </table>
+    </form>
+  </body>
+  <script src="./js/event.js"></script>
+</html>
