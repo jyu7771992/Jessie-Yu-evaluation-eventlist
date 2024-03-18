@@ -178,13 +178,13 @@ const eventAPIs = (function () {
 //View
 class EventsView {
   constructor() {
-    this.addEvent = document.getElementById('add-event-btn');
+    this.addEvent = document.querySelector('.add-event');
     this.tableBodyList = document.querySelector('.tableBodyList');
   }
 
   //render events
   renderEvents(events) {
-    console.log(events);
+    //console.log(events);
     this.tableBodyList.innerHTML = ''; //clear it first
     //delete the redundant code
     events.map((event) => {
@@ -217,10 +217,11 @@ class EventsView {
       <input class="close" type="date" id="end-time" name="meeting-time" value="${event.endDate}"/>
     </td>
     <td>
-      <button id="edit" class="btn-edit open">${editImg}</button>
-      <button id="save" class="btn-add close">${saveImg}</button>
-      <button id="btn-delete" class="btn-delete open">${deleteImg}</button>
-      <button id="btn-cancel" class="btn-cancel close">${cancelImg}</button>
+      <button class="btn-add close">${addImg}</button>
+      <button class="btn-edit open">${editImg}</button>
+      <button class="btn-add close">${saveImg}</button>
+      <button class="btn-delete open">${deleteImg}</button>
+      <button class="btn-cancel close">${cancelImg}</button>
     </td>
   `;
     return eventRow;
@@ -294,6 +295,7 @@ class EventsController {
   setUpAddEvent() {
     this.view.addEvent.addEventListener('click', async () => {
       const newEventElem = document.createElement('tr');
+      newEventElem.classList.add('row');
       newEventElem.innerHTML = `
       <th><input type="text" class="input-event-name"></th>
       <td class>
@@ -305,17 +307,18 @@ class EventsController {
         <input type="date" id="new-end-time" name="meeting-time" />
       </td>
       <td>
-        <button type="submit" class="new-edit-btn close">${editImg}</button>
-        <button type="submit" class="new-save-btn open">${saveImg}</button>
-        <button class="new-delete-btn close">${deleteImg}</button>
-        <button class="new-cancel-btn open">${cancelImg}</button>
+        <button class="btn-add close">${addImg}</button>
+        <button class="btn-edit open">${editImg}</button>
+        <button class="btn-add close">${saveImg}</button>
+        <button class="btn-delete open">${deleteImg}</button>
+        <button class="btn-cancel close">${cancelImg}</button>
       </td>
       `;
       //add the new event item
-      this.view.eventList.appendChild(newEventElem);
+      this.view.tableBodyList.appendChild(newEventElem);
 
       //click save button
-      const saveBtn = newEventElem.querySelector('.new-save-btn');
+      const saveBtn = newEventElem.querySelector('.btn-add');
       saveBtn.addEventListener('click', async () => {
         const eventNameInput = newEventElem.querySelector('.new-event-name');
         const startDateInput = newEventElem.querySelector('.new-start-time');
