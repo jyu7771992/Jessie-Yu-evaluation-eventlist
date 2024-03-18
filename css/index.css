@@ -69,3 +69,23 @@ td {
 .tableBody .row {
   margin-bottom: 0.5rem;
 }
+
+.btn-edit,
+.btn-save,
+.btn-delete,
+.btn-cancel {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  color: white;
+  border: 0px;
+}
+.btn-edit,
+.btn-save {
+  background-color: #c94c4c;
+}
+
+.btn-delete,
+.btn-cancel {
+  background-color: #008cba;
+}

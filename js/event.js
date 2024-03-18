@@ -208,18 +208,18 @@ class EventsView {
     eventRow.innerHTML = `
     <th>${event.eventName}</th>
     <td class>
-      <p class="event-start-date-text close">${event.startDate}</p>
-      <input type="date" id="start-time" name="meeting-time" />
+      <p class="event-start-date-text">${event.startDate}</p>
+      <input class="close" type="date" id="start-time" name="meeting-time" value="${event.startDate}"/>
     </td>
     <td>
-    <p class="event-end-date-text close">${event.endDate}</p>
-      <input type="date" id="end-time" name="meeting-time" />
+    <p class="event-end-date-text">${event.endDate}</p>
+      <input class="close" type="date" id="end-time" name="meeting-time" value="${event.endDate}"/>
     </td>
     <td>
-      <button type="submit" id="submit" class="edit close">${editImg}</button>
-      <button type="submit" id="save" class="submit open">${saveImg}</button>
+      <button id="edit" class="edit close">${editImg}</button>
+      <button id="save" class="submit open">${saveImg}</button>
       <button id="btn-delete" class="delete close">${deleteImg}</button>
-      <button id="btn-delete" class="cancel open">${cancelImg}</button>
+      <button id="btn-cancel" class="cancel open">${cancelImg}</button>
     </td>
   `;
     return eventRow;
