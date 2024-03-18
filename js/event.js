@@ -1,4 +1,4 @@
-//img place
+//initialize svg img
 const editImg = ` <svg
     focusable='false'
     aria-hidden='true'
@@ -48,92 +48,86 @@ const addImg = ` <svg
       stroke-linejoin='round'
     />
   </svg>`;
+
 const API_URL = 'http://localhost:3000/event';
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const EventModel = new EventsModel();
-  const events = await EventModel.fetchEvents();
-  // renderTable(events);
-});
+// document.addEventListener('DOMContentLoaded', async () => {
+//   const EventModel = new EventsModel();
+//   const events = await EventModel.fetchEvents();
+//   renderEvents(events);
+// });
 
-const addEvent = document.getElementById('add-event-btn');
-addEvent.addEventListener('click', addNewRow);
+// const addEvent = document.getElementById('add-event-btn');
+// addEvent.addEventListener('click', addNewRow);
 
-function addNewRow() {
-  const tableBody = document.getElementById('tableBody');
-  const row = document.createElement('tr');
-  row.setAttribute('id', `123`);
-  const nameCell = document.createElement('th');
-  nameCell.innerHTML = `
-      <p class="close"></p>
-      <input class="open" type="text" id="name" name="name" />
-      `;
-  const startCell = document.createElement('td');
-  startCell.innerHTML = `
-      <p class="close"></p>
-      <input class="open" type="date" id="start-time" name="start-date" />
-      `;
-  const endCell = document.createElement('td');
-  endCell.innerHTML = `
-  <p class="close"></p>
-  <input class="open" type="date" id="end-time" name="end-date" />
-  `;
-  //add actions cell:add, edit, and delete
-  const actionsCell = document.createElement('td');
-  const addButton = document.createElement('button');
-  addButton.classList.add('btn-add');
-  addButton.innerHTML = addImg;
+// function addNewRow() {
+//   const tableBodyList = document.getElementById('tableBodyList');
+//   const row = document.createElement('tr');
+//   row.setAttribute('id', `123`);
+//   const nameCell = document.createElement('th');
+//   nameCell.innerHTML = `
+//       <p class="close"></p>
+//       <input class="open" type="text" id="name" name="name" />
+//       `;
+//   const startCell = document.createElement('td');
+//   startCell.innerHTML = `
+//       <p class="close"></p>
+//       <input class="open" type="date" id="start-time" name="start-date" />
+//       `;
+//   const endCell = document.createElement('td');
+//   endCell.innerHTML = `
+//   <p class="close"></p>
+//   <input class="open" type="date" id="end-time" name="end-date" />
+//   `;
+//   //add actions cell:add, edit, and delete
+//   const actionsCell = document.createElement('td');
+//   const addButton = document.createElement('button');
+//   addButton.classList.add('btn-add');
+//   addButton.innerHTML = addImg;
 
-  //edit
-  const editButton = document.createElement('button');
-  editButton.classList.add('btn-edit close');
-  editButton.innerHTML = editImg;
-  editButton.addEventListener('click', () => {
-    // Implement edit functionality here
-    console.log('edit');
-  });
+//   //edit
+//   const editButton = document.createElement('button');
+//   editButton.classList.add('btn-edit close');
+//   editButton.innerHTML = editImg;
+//   editButton.addEventListener('click', () => {
+//     // Implement edit functionality here
+//     console.log('edit');
+//   });
 
-  //delete
-  const deleteButton = document.createElement('button');
-  deleteButton.classList.add('btn-delete close');
-  deleteButton.innerHTML = deleteImg;
-  deleteButton.addEventListener('click', () => {
-    // Delete row
-    row.remove();
-  });
-  const saveButton = document.createElement('button');
-  saveButton.classList.add('btn-save');
-  saveButton.innerHTML = saveImg;
-  saveButton.addEventListener('click', () => {
-    // Delete row
-    row.remove();
-  });
+//   //delete
+//   const deleteButton = document.createElement('button');
+//   deleteButton.classList.add('btn-delete close');
+//   deleteButton.innerHTML = deleteImg;
+//   deleteButton.addEventListener('click', () => {
+//     // Delete row
+//     row.remove();
+//   });
+//   const saveButton = document.createElement('button');
+//   saveButton.classList.add('btn-save');
+//   saveButton.innerHTML = saveImg;
+//   saveButton.addEventListener('click', () => {
+//     // Delete row
+//     row.remove();
+//   });
 
-  actionsCell.appendChild(addButton);
-  actionsCell.appendChild(editButton);
-  actionsCell.appendChild(deleteButton);
+//   actionsCell.appendChild(addButton);
+//   actionsCell.appendChild(editButton);
+//   actionsCell.appendChild(deleteButton);
 
-  row.appendChild(nameCell);
-  row.appendChild(startCell);
-  row.appendChild(endCell);
-  row.appendChild(actionsCell);
-  tableBody.appendChild(row);
-}
+//   row.appendChild(nameCell);
+//   row.appendChild(startCell);
+//   row.appendChild(endCell);
+//   row.appendChild(actionsCell);
+//   tableBodyList.appendChild(row);
+// }
+
 // json server has to be in a different folder
 
 const eventAPIs = (function () {
-  const API_URL = 'http://localhost:3000/event';
+  const API_URL = 'http://localhost:3000/events';
 
   async function getEvents() {
-    try {
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-      throw error;
-    }
+    return fetch(API_URL).then((res) => res.json());
   }
 
   //add
@@ -144,25 +138,33 @@ const eventAPIs = (function () {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newEvent),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((event) => console.log(event));
   }
 
   //edit
-  async function editEvent(id) {
+  async function editEvent(id, updatedData) {
     return fetch(`${API_URL}/${id}`, {
-      method: 'PUT',
+      //json-server : making a PATCH Request to Update Data
+      //https://www.dhiwise.com/post/how-to-use-json-server-in-frontend-development
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newEvent),
-    }).then((res) => res.json());
+      body: JSON.stringify(updatedData),
+    })
+      .then((res) => res.json())
+      .then((event) => console.log(event)); //check the data
   }
 
   //delete
   async function deleteEvent(id) {
     return fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then(() => console.log('event deleted'));
   }
 
   return {
@@ -173,70 +175,20 @@ const eventAPIs = (function () {
   };
 })();
 
+//View
 class EventsView {
   constructor() {
-    this.table = document.querySelector('.tableBody');
-    this.eventInput = document.querySelector('#new-event');
-    this.eventstart = document.querySelector('#new-event-start');
-    this.eventEnd = document.querySelector('#new-event-end');
-    this.eventEdit = document.querySelector('.event-list');
-    this.eventDelete = document.querySelector('.event-list');
-    this.eventDelete = document.querySelector('.event-list');
-    this.eventDelete = document.querySelector('.event-list');
+    this.addEvent = document.getElementById('add-event-btn');
+    this.tableBodyList = document.querySelector('.tableBodyList');
   }
 
-  clearInput() {
-    this.eventInput.value = '';
-    this.eventStart.value = '';
-    this.eventEnd.value = '';
-  }
-  //render
-  renderTable(events) {
-    const tableBody = document.getElementById('tableBody');
-    events.forEach((event) => {
-      const row = document.createElement('tr');
-      row.setAttribute('id', `${event.id}`);
-      const nameCell = document.createElement('th');
-      idCell.textContent = event.eventName;
-      const startCell = document.createElement('td');
-      startCell.innerHTML = `
-      <p class="open">${event.startDate}</p>
-      <input class="close" type="date" id="start-time" name="meeting-time" />
-      `;
-      const endCell = document.createElement('td');
-      endCell.textContent = event.endDate;
-      //add actions cell:add, edit, and delete
-      const actionsCell = document.createElement('td');
-      const addButton = document.createElement('button');
-      addButton.textContent = addImg;
-      addButton.classList.add('btn-add');
-
-      //edit
-      const editButton = document.createElement('button');
-      editButton.textContent = editImg;
-      editButton.classList.add('btn-edit');
-      editButton.addEventListener('click', () => {
-        // Implement edit functionality here
-        console.log('edit');
-      });
-
-      //delete
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = deleteImg;
-      deleteButton.classList.add('btn-delete');
-      deleteButton.addEventListener('click', () => {
-        // Delete row
-        row.remove();
-      });
-
-      actionsCell.appendChild(addButton);
-      actionsCell.appendChild(editButton);
-      actionsCell.appendChild(deleteButton);
-
-      row.appendChild(nameCell);
-      row.appendChild(titleCell);
-      row.appendChild(actionsCell);
-      tableBody.appendChild(row);
+  //render events
+  renderEvents(events) {
+    console.log(events);
+    this.tableBodyList.innerHTML = ''; //clear it first
+    //delete the redundant code
+    events.map((event) => {
+      this.renderNewEvent(event);
     });
   }
 
@@ -245,20 +197,22 @@ class EventsView {
   }
 
   renderNewEvent(newEvent) {
-    this.EventList.appendChild(this.createEventElement(newEvent));
+    this.tableBodyList.appendChild(this.createEventElement(newEvent));
   }
 
   createEventElement(event) {
-    const table = document.getElementById('table-container');
-    var newRow = table.insertRow();
-    newRow.setAttribute('id', event.id);
-    newRow.innerHTML = `<tr>
-    <th>event name</th>
-    <form>
+    //create the new element
+    const eventRow = document.createElement('tr');
+    eventRow.classList.add('row');
+    eventRow.setAttribute('id', event.id);
+    eventRow.innerHTML = `
+    <th>${event.eventName}</th>
     <td class>
+      <p class="event-start-date-text close">${event.startDate}</p>
       <input type="date" id="start-time" name="meeting-time" />
     </td>
     <td>
+    <p class="event-end-date-text close">${event.endDate}</p>
       <input type="date" id="end-time" name="meeting-time" />
     </td>
     <td>
@@ -266,24 +220,21 @@ class EventsView {
       <button type="submit" id="save" class="submit open">${saveImg}</button>
       <button id="btn-delete" class="delete close">${deleteImg}</button>
       <button id="btn-delete" class="cancel open">${cancelImg}</button>
-    </form>
     </td>
-  </tr>`;
-    return eventElement;
+  `;
+    return eventRow;
   }
 }
 
+//Model
 class EventsModel {
-  async fetchEvents() {
-    try {
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-      throw error;
-    }
+  #events;
+  constructor(events = []) {
+    this.#events = events;
+  }
+
+  getEvents() {
+    return this.#events;
   }
 
   setEvents(newEvents) {
@@ -295,10 +246,11 @@ class EventsModel {
   }
 
   deleteEvent(id) {
-    this.#events = this.#events.filter((Event) => Event.id !== id);
+    this.#events = this.#events.filter((event) => event.id !== id);
   }
 }
 
+//controller
 class EventsController {
   constructor(view, model) {
     this.view = view;
@@ -312,8 +264,10 @@ class EventsController {
   }
 
   setUpEvents() {
-    this.setUpSubmitEvent();
+    this.setUpAddEvent();
+    this.setUpSaveEvent();
     this.setUpDeleteEvent();
+    this.setUpEditEvent();
   }
 
   async fetchEvents() {
@@ -324,7 +278,7 @@ class EventsController {
 
   setUpDeleteEvent() {
     //event delegation
-    this.view.table.addEventListener('click', async (e) => {
+    this.view.tableBodyList.addEventListener('click', async (e) => {
       const elem = e.target;
       if (elem.classList.contains('event-delete-btn')) {
         const eventElem = elem.parentElement.parentElement;
@@ -336,9 +290,80 @@ class EventsController {
     });
   }
 
-  setUpSubmitEvent() {
-    this.view.newEventForm.addEventListener('submit', async (e) => {
+  setUpAddEvent() {
+    this.view.addEvent.addEventListener('click', async () => {
+      const newEventElem = document.createElement('tr');
+      newEventElem.innerHTML = `
+      <th><input type="text" class="input-event-name"></th>
+      <td class>
+        <p class="close"></p>
+        <input type="date" id="new-start-time" name="meeting-time" />
+      </td>
+      <td>
+      <p class="close"></p>
+        <input type="date" id="new-end-time" name="meeting-time" />
+      </td>
+      <td>
+        <button type="submit" class="new-edit-btn close">${editImg}</button>
+        <button type="submit" class="new-save-btn open">${saveImg}</button>
+        <button class="new-delete-btn close">${deleteImg}</button>
+        <button class="new-cancel-btn open">${cancelImg}</button>
+      </td>
+      `;
+      //add the new event item
+      this.view.eventList.appendChild(newEventElem);
+
+      //click save button
+      const saveBtn = newEventElem.querySelector('.new-save-btn');
+      saveBtn.addEventListener('click', async () => {
+        const eventNameInput = newEventElem.querySelector('.new-event-name');
+        const startDateInput = newEventElem.querySelector('.new-start-time');
+        const endDateInput = newEventElement.querySelector('.new-end-time');
+
+        const eventName = eventNameInput.value.trim();
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+
+        if (eventName == null || startDate == null || endDate == null) {
+          alert('The input could not be blank!');
+          return;
+        }
+
+        //check if the start date and the end date sis not a valid range
+        let splitStart = startDate.split('-');
+        let splitEnd = endDate.split('-');
+
+        let fromDate = Date.parse(
+          Date.parse(splitStart[0], splitStart[1] - 1, splitStart[2])
+        );
+        let toDate = Date.parse(
+          Date.parse(splitEnd[0], splitEnd[1] - 1, splitEnd[2])
+        );
+
+        if (fromDate < toDate) {
+          alert(
+            'The end date of the event cannot be earlier than the start date.'
+          );
+        }
+
+        const newEvent = await eventAPIs.addEvent({
+          eventName,
+          startDate,
+          endDate,
+        });
+        this.model.addEvent(newEvent);
+        this.view.renderNewEvent(newEvent);
+        newEventElement.remove();
+      });
+    });
+  }
+
+  setUpSaveEvent() {
+    this.view.tableBodyList.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const element = e.target;
+      //if(element.classList)
+      const elementID = element.getElementById('id');
       const input = this.view.eventInput;
       const eventName = input.value;
       if (!eventName) {
@@ -348,14 +373,42 @@ class EventsController {
       const newEvent = await eventAPIs.addEvent({
         eventName,
       });
+
       this.model.addEvent(newEvent);
-      //   console.log(this.model.getEvents());
       this.view.renderNewEvent(newEvent);
       this.view.clearInput();
     });
   }
+
+  setUpEditEvent() {
+    this.view.tableBodyList.addEventListener('click', async (e) => {
+      const element = e.target;
+      if (element.classList.contains('edit-event-btn')) {
+        const eventElem = elem.closest('tr');
+
+        const eventNameText = eventElem.querySelector('.event-name-text');
+        const eventNameInput = eventElem.querySelector('.event-name-input');
+        eventNameText.style.display = 'none';
+        eventNameInput.style.display = '';
+
+        const startDateText = eventElem.querySelector('.start-date-text');
+        const startDateInput = eventElem.querySelector('.start-date-input');
+        startDateText.style.display = 'none';
+        startDateInput.style.display = '';
+
+        const endDateText = eventElem.querySelector('.end-date-text');
+        const endDateInput = eventElem.querySelector('.end-date-input');
+        endDateText.style.display = 'none';
+        endDateInput.style.display = '';
+
+        eventElem.querySelector('.save-event-btn').style.display = '';
+        // elem.style.display = 'none';
+        e.target.style.display = 'none';
+      }
+    });
+  }
 }
 
-const EventsViews = new EventsView();
-const EventsModels = new EventsModel();
-const EventsControllers = new EventsController(EventsViews, EventsModels);
+const eventsViews = new EventsView();
+const eventsModels = new EventsModel();
+const eventsControllers = new EventsController(eventsViews, eventsModels);
