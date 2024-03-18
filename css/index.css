@@ -51,22 +51,23 @@ thead tr th {
   text-align: center;
 }
 
-.tableBody .row,
-.tableBody .row td {
+.tableBodyList .row,
+.tableBodyList .row td {
   background-color: #e6e2d3;
   border-collapse: collapse;
   border-style: hidden;
 }
 
-.tableBody .row td {
+.tableBodyList .row td {
   text-align: center;
 }
+
 th,
 td {
   padding: 15px;
 }
 
-.tableBody .row {
+.tableBodyList .row {
   margin-bottom: 0.5rem;
 }
 
@@ -74,18 +75,25 @@ td {
 .btn-save,
 .btn-delete,
 .btn-cancel {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 5px;
-  color: white;
+  fill: white;
   border: 0px;
+  background-size: 25px;
+  text-align: center;
+  display: inline-block;
+  padding: 6px;
+  margin-left: 5px;
+  cursor: pointer;
 }
+
 .btn-edit,
 .btn-save {
-  background-color: #c94c4c;
+  background-color: #008cba;
 }
 
 .btn-delete,
 .btn-cancel {
-  background-color: #008cba;
+  background-color: #c94c4c;
 }

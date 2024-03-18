@@ -205,6 +205,7 @@ class EventsView {
     const eventRow = document.createElement('tr');
     eventRow.classList.add('row');
     eventRow.setAttribute('id', event.id);
+    //instead of using insert row, changing innerHTML instead
     eventRow.innerHTML = `
     <th>${event.eventName}</th>
     <td class>
@@ -216,10 +217,10 @@ class EventsView {
       <input class="close" type="date" id="end-time" name="meeting-time" value="${event.endDate}"/>
     </td>
     <td>
-      <button id="edit" class="edit close">${editImg}</button>
-      <button id="save" class="submit open">${saveImg}</button>
-      <button id="btn-delete" class="delete close">${deleteImg}</button>
-      <button id="btn-cancel" class="cancel open">${cancelImg}</button>
+      <button id="edit" class="btn-edit open">${editImg}</button>
+      <button id="save" class="btn-add close">${saveImg}</button>
+      <button id="btn-delete" class="btn-delete open">${deleteImg}</button>
+      <button id="btn-cancel" class="btn-cancel close">${cancelImg}</button>
     </td>
   `;
     return eventRow;
