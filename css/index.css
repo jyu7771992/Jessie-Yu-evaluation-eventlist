@@ -27,6 +27,7 @@ body {
   font-size: medium;
   display: inline-block;
   text-align: center;
+  cursor: pointer;
 }
 
 .table-container {
@@ -67,21 +68,26 @@ td {
 .btn-edit,
 .btn-add,
 .btn-delete,
-.btn-cancel {
-  width: 24px;
-  height: 24px;
+.btn-cancel,
+.btn-save {
+  width: 26px;
+  height: 26px;
   border-radius: 5px;
   fill: white;
   border: 0px;
-  background-size: 25px;
   text-align: center;
   display: inline-block;
-  padding: 6px;
   margin-left: 5px;
   cursor: pointer;
+  padding: 2px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
 }
 
 .btn-edit,
+.btn-save,
 .btn-add {
   background-color: #008cba;
 }
@@ -90,18 +96,20 @@ td {
 .btn-cancel {
   background-color: #c94c4c;
 }
-
+.btn-save.open,
 .btn-edit.open,
 .btn-delete.open,
 .btn-cancel.open,
-.btn-add.open {
+.btn-add.open,
+.input-event-name.open {
   display: inline-block;
 }
-
+.btn-save.close,
 .btn-edit.close,
 .btn-delete.close,
 .btn-cancel.close,
-.btn-add.close {
+.btn-add.close,
+.input-event-name.close {
   display: none;
 }
 
@@ -111,4 +119,36 @@ td {
 
 .close {
   display: none;
+}
+
+.input-event-name {
+  height: 30px;
+  padding: 2.5px;
+  border-radius: 5px;
+  border: 0px;
+  display: inline-block;
+}
+
+/* add svg in the css to prevent the issue of e-target */
+.btn-edit {
+  background-image: url('../image/editImg.svg');
+  background-size: 75%;
+}
+.btn-add {
+  background-image: url('../image/addImg.svg');
+}
+.btn-delete {
+  background-image: url('../image/deleteImg.svg');
+  background-size: 75%;
+}
+.btn-cancel {
+  background-image: url('../image/cancelImg.svg');
+  background-size: 75%;
+}
+.btn-save {
+  background-image: url('../image/saveImg.svg');
+  background-size: 60%;
+}
+path {
+  fill: white;
 }
